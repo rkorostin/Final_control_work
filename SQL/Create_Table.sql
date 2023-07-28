@@ -1,6 +1,6 @@
 -- Create DB Friends_of_Human
-DROP DATABASE IF Friends_of_Human;
-CREATE DATABASE Friends_of_Human;
+-- DROP DATABASE IF Friends_of_Human;
+-- CREATE DATABASE Friends_of_Human;
 
 USE Friends_of_Human;
 
