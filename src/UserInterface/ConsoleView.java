@@ -28,10 +28,10 @@ public class ConsoleView implements View <Pet> {
     public <T> void printAll (List <T> list, Class <T> clazz) {
         System.out.print("\033[H\033[J");
         if (list.isEmpty())
-            System.out.println("список пуст");
+            System.out.println("Список пуст");
         else {
             if (clazz == Pet.class)
-                System.out.println("\n          Наши питомцы:");
+                System.out.println("\n          Список животных:");
             for (T item : list) {
                 System.out.println(item);              
             }
