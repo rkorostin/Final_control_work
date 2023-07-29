@@ -23,7 +23,7 @@ public class ConsoleMenu {
             while (flag) {
 
                 System.out.println(
-                        "\n1 - Список всех животных\n2 - Завести новое животное\n3 - Изменить данные о животном\n4 - Что умеет животное\n5 - Дрессировка\n6 - Удалить запись\n0 - Выход");
+                        "\n1 - Список животных\n2 - Завести новое животное\n3 - Редактировать животное\n4 - Изученные команды\n5 - Команды к изучению\n6 - Удалить запись\n0 - Выход");
                 String key = in.next();
                 switch (key) {
                     case "1":
@@ -99,21 +99,21 @@ public class ConsoleMenu {
                 case "0":
                     return null;
                 default:
-                    System.out.println("Такого варианта нет, введите число от 0 до 3");
+                    System.out.println("Такого варианта нет");
                     break;
             }
         }
     }
 
     private int menuChoicePet(Scanner in) {
-        System.out.println("\nВведите номер животного, 0 для возврата в основное меню: ");
+        System.out.println("\nВведите номер животного. Для возврата в основное меню введите 0: ");
         while (true) {
             int id = in.nextInt();
             in.nextLine();
             if (id == 0)
                 return id;
             if (petController.getById(id) == null) {
-                System.out.println("Животного с таким номером нет, попробуйте еще раз, 0 для возврата в основное меню:");
+                System.out.println("Животного с таким номером нет, попробуйте еще раз. Для возврата в основное меню введите 0:");
             } else
                 return id;
 
@@ -123,7 +123,7 @@ public class ConsoleMenu {
     private void menuTrainPet(int petId, Scanner in) {
         Scanner sc = in;
         while (true) {
-            System.out.println("Введите новую команду, 0 для возврата в основное меню: ");
+            System.out.println("Введите новую команду. Для возврата в основное меню введите 0: ");
             String command = sc.nextLine();
             if (command.length() == 1 && command.equals("0"))
                 return;
