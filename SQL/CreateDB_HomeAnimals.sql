@@ -1,6 +1,6 @@
 -- Create DB pet_db
 -- DROP DATABASE IF pet_db;
--- CREATE DATABASE pet_db;
+CREATE DATABASE pet_db;
 
 USE pet_db;
 
@@ -51,13 +51,13 @@ INSERT INTO pet_types (Genus_name) values
 
 -- Три животных в питомнике
 INSERT INTO pet_list (PetName, Birthday, GenusId) VALUES 
-('Собакин', '2020-05-20', 1),
-('Котецкий', '2021-01-10', 2),
-('Крысёныш', '2022-08-01', 3);
+('Том', '2020-05-20', 1),
+('Спайк', '2021-01-10', 2),
+('Джерри', '2022-08-01', 3);
 
 -- Команды для животных
 INSERT INTO commands (command_name) values
-('cидель'),
+('cидеть'),
 ('лежать'),
 ('стоять'),
 ('бежать'),
