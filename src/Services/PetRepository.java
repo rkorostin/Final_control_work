@@ -104,26 +104,54 @@ public class PetRepository implements IRepository<Pet> {
         } 
     }
 
+    // public void train (int id, String command){
+    //     try {
+    //         Class.forName("com.mysql.cj.jdbc.Driver");
+    //         try (Connection dbConnection = getConnection()) {
+    //             String SQLstr = "INSERT INTO pet_command (PetId, CommandId) SELECT ?, (SELECT Id FROM commands WHERE Command_name = ?)";
+    //             PreparedStatement prepSt = dbConnection.prepareStatement(SQLstr);
+    //             prepSt.setInt(1, id);
+    //             prepSt.setString(2, command);
+
+    //             prepSt.executeUpdate();
+    //         }
+    //     } catch (ClassNotFoundException | IOException | SQLException ex) {
+    //         Logger.getLogger(PetRepository.class.getName()).log(Level.SEVERE, null, ex);
+    //         throw new RuntimeException(ex.getMessage());
+    //     } 
+    // }
+
     public void train (int id, String command){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             try (Connection dbConnection = getConnection()) {
-                String SQLstr = "INSERT INTO pet_command (PetId, CommandId) SELECT ?, (SELECT Id FROM commands WHERE Command_name = ?)";
+                String SQLstr = "SELECT Id FROM commands WHERE Command_name = ?";
                 PreparedStatement prepSt = dbConnection.prepareStatement(SQLstr);
-                prepSt.setInt(1, id);
-                prepSt.setString(2, command);
-
-                prepSt.executeUpdate();
+                prepSt.setString(1, command);
+                resultSet = prepSt.executeQuery();
+                if (resultSet.next()) {
+                    int commandId = resultSet.getInt(1);
+                    SQLstr = "INSERT INTO pet_command (PetId, CommandId) VALUES (?, ?)";
+                    prepSt = dbConnection.prepareStatement(SQLstr);
+                    prepSt.setInt(1, id);
+                    prepSt.setInt(2, commandId);
+                    prepSt.executeUpdate();
+                    System.out.println("Научились!");
+                } else {
+                    System.out.println("Это мы не сможем");
+                }
             }
         } catch (ClassNotFoundException | IOException | SQLException ex) {
             Logger.getLogger(PetRepository.class.getName()).log(Level.SEVERE, null, ex);
             throw new RuntimeException(ex.getMessage());
         } 
-    }
+    } 
 
     public List<String> getCommandsById (int petId, int commands_type){   
         
-        
+        // commands type == 1 - получить команды, выполняемые животным
+        // commands type != 1 - новые команды
+
         List <String> commands = new ArrayList <>();
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -131,7 +159,7 @@ public class PetRepository implements IRepository<Pet> {
                 if (commands_type == 1){
                     SQLstr = "SELECT Command_name FROM pet_command pc JOIN commands c ON pc.CommandId = c.Id WHERE pc.PetId = ?";
                 } else {
-                    SQLstr = "SELECT Command_name FROM commands c JOIN Genus_command gc ON c.Id = gc.CommandId WHERE gc.GenusId = (SELECT GenusId FROM pet_list WHERE Id = ?)";
+                    SQLstr = "SELECT Command_name FROM commands c JOIN genus_command gc ON c.Id = gc.CommandId WHERE gc.GenusId = (SELECT GenusId FROM pet_list WHERE Id = ?)";
                 }
                 PreparedStatement prepSt = dbConnection.prepareStatement(SQLstr);
                 prepSt.setInt(1, petId);

@@ -2,6 +2,7 @@ package UserInterface;
 
 import java.util.Scanner;
 import Controller.*;
+import Counter.Counter;
 import Exceptions.UncorrectDataException;
 import Model.PetType;
 
@@ -108,15 +109,19 @@ public class ConsoleMenu {
     private int menuChoicePet(Scanner in) {
         System.out.println("\nВведите номер животного. Для возврата в основное меню введите 0: ");
         while (true) {
-            int id = in.nextInt();
-            in.nextLine();
-            if (id == 0)
-                return id;
-            if (petController.getById(id) == null) {
-                System.out.println("Животного с таким номером нет, попробуйте еще раз. Для возврата в основное меню введите 0:");
-            } else
-                return id;
-
+            if (in.hasNextInt()) {
+                int id = in.nextInt();
+                in.nextLine();
+                if (id == 0)
+                    return id;
+                if (petController.getById(id) == null) {
+                    System.out.println("Животного с таким номером нет, попробуйте еще раз. Для возврата в основное меню введите 0:");
+                } else
+                    return id;
+            } else {
+                System.out.println("Некорректный ввод, попробуйте еще раз. Для возврата в основное меню введите 0:");
+                in.nextLine();
+            }
         }
     }
 

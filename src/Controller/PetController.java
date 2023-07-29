@@ -70,7 +70,7 @@ public class PetController {
                 view.showMessage("это мы уже умеем");
             else {
                 if (!((PetRepository) petRepository).getCommandsById(id, 2).contains(command))
-                    view.showMessage("это мы не cумеем выполнить");
+                    view.showMessage("это мы не сможем");
                 else {
                     ((PetRepository) petRepository).train(id, command);
                     view.showMessage("научились\n");
